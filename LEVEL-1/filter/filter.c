@@ -1,78 +1,50 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
 #include <unistd.h>
+#include <stdio.h>
 #include <string.h>
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
 
-void	print_error(void)
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 42
+#endif
+
+void	print_error(char **dest, char **str, int free1, int free2)
 {
-	perror("Error");
+	if(free1 == 1)
+		free(dest);
+	if(free2 == 1)
+		free(str);
+	perror("Error: ");
 	exit(1);
 }
-char	*ft_strdup(char *s)
-{
-	int		i;
-	char	*cpy;
 
-	i = 0;
-	if (!s)
+char *ft_strjoin(char *s1, char *s2){
+	char *join = malloc(strlen(s1) + strlen(s2) + 1);
+	if (!join)
 		return (NULL);
-	cpy = malloc(sizeof(char) * (strlen(s) + 1));
-	if (!cpy)
-		return (NULL);
-	while (s[i])
-	{
-		cpy[i] = s[i];
-		i++;
-	}
-	cpy[i] = '\0';
-	return (cpy);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*result;
-	char	*dest;
-
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (ft_strdup(s1));
-	dest = malloc(strlen(s1) + strlen(s2) + 1);
-	if (!dest)
-		return (NULL);
-	result = dest;
+	char *result = join;
 	while (*s1)
-		*dest++ = *s1++;
+		*join++ = *s1++;
 	while (*s2)
-		*dest++ = *s2++;
-	*dest = '\0';
+		*join++ = *s2++;
+	*join = '\0';
 	return (result);
 }
 
-void	ft_check_replace(char **str, char *to_replace)
-{
-	if (!str || !*str || !to_replace)
-		return;
+void ft_check_replace(char **str, char *arg){
 	char	*new_str = malloc(strlen(*str) + 1);
-	size_t	len = strlen(to_replace);
-	size_t	src_len = strlen(*str);
+	size_t	len = strlen(arg);
 	if (!new_str)
 	{
 		free(*str);
-		print_error();
+		perror("Error: ");
+		exit(1);
 	}
 	char *src = *str;
 	char *dst = new_str;
 	while (*src)
 	{
 		size_t i = 0;
-		while (to_replace[i] && src[i] == to_replace[i])
+		while (arg[i] && src[i] == arg[i])
 			i++;
 		if (i == len)
 		{
@@ -88,34 +60,22 @@ void	ft_check_replace(char **str, char *to_replace)
 	*str = new_str;
 }
 
-int	main(int ac, char **av)
-{
-	if (ac != 2 || !(av[1][0]))
-		return (1);
-
-	char	*dest;
-	char	*str = NULL;
-	dest = malloc((size_t)BUFFER_SIZE + 1);
-	if (!dest)
-		print_error();
+int main(int ac, char **av){
+	if(ac != 2 || av[1][0] == '\0')
+		return 1;
+	char *str = calloc(1, 1);
+	char *dest = malloc((size_t)BUFFER_SIZE + 1);
+	if(!dest)
+		print_error(&dest, &str, 0, 0);
 	ssize_t line_b = 1;
-	while (line_b > 0)
-	{
+	while(line_b > 0){
 		line_b = read(0, dest, BUFFER_SIZE);
 		if (line_b == -1)
-		{
-			free(dest);
-			free(str);
-			print_error();
-		}
+			print_error(&dest, &str, 1, 1);
 		dest[line_b] = '\0';
 		char *tmp = ft_strjoin(str, dest);
 		if (!tmp)
-		{
-			free(dest);
-			free(str);
-			print_error();
-		}
+			print_error(&dest, &str, 1, 1);
 		free(str);
 		str = tmp;
 	}

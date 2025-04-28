@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #include <unistd.h>
 
 #ifndef BUFFER_SIZE
@@ -53,4 +52,10 @@ char    *get_next_line(int fd)
     if (i == 0)
         return (NULL);
     return (ft_strdup(line));
+}
+
+#include <fcntl.h>
+int main(){
+    int fd = open("file.txt", O_CREAT, 0777);
+    printf("%s", get_next_line(fd));
 }
