@@ -56,6 +56,9 @@ char    *get_next_line(int fd)
 
 #include <fcntl.h>
 int main(){
-    int fd = open("file.txt", O_CREAT, 0777);
+    int fd = open("file.txt", O_RDWR);
+    printf("%s", get_next_line(fd));
+    printf("%s", get_next_line(fd));
+    printf("%s", get_next_line(fd));
     printf("%s", get_next_line(fd));
 }
