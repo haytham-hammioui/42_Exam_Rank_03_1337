@@ -12,8 +12,8 @@ char *ft_strdup(char *line){
 	int i = 0;
 	while(line[i])
 		i++;
-	char *ptr = (char *)malloc(i + 1);
-	if(!ptr)
+	char *ptr;
+	if(!(ptr = (char *)malloc(i + 1)))
 		return NULL;
 	i = 0;
 	while(line[i]){
@@ -25,13 +25,13 @@ char *ft_strdup(char *line){
 }
 
 char    *get_next_line(int fd){
-	 static char buffer[BUFFER_SIZE];
-	 char line[70000];
-	 int i = 0;
-	 static int b_pos;
-	 static int b_read;
-	 if(fd < 0 || BUFFER_SIZE < 1)
-	 	return NULL;
+	static char buffer[BUFFER_SIZE];
+	char line[70000];
+	static int b_read;
+	static int b_pos;
+	int i = 0;
+	if(fd < 0 || BUFFER_SIZE < 1)
+		return NULL;
 	while(1337){
 		if(b_pos >= b_read){
 			b_read = read(fd, buffer, BUFFER_SIZE);
@@ -57,14 +57,4 @@ int main(){
 	printf("%s", get_next_line(fd));
 	printf("----------------------\n");
 	close(fd);
-	fd = open("file.txt", O_RDWR);
-	write(fd, "hello\n", 6);
-	write(fd, "world\n", 6);
-	close(fd);
-	fd = open("file.txt", O_RDONLY);
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-
 }

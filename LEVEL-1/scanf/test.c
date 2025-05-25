@@ -3,6 +3,10 @@
 #include <ctype.h>
 #include <unistd.h>
 
+#include <stdarg.h>
+#include <stdio.h>
+#include <ctype.h>
+
 int match_space(FILE *f) {
     int c = fgetc(f);
     while (c != EOF && isspace(c))
@@ -121,7 +125,7 @@ int ft_vfscanf(FILE *f, const char *format, va_list ap) {
     if (ferror(f)) {
         return -1;
     }
-    return nconv;
+    return nconv;    
 }
 
 int ft_scanf(const char *format, ...) {
@@ -130,4 +134,16 @@ int ft_scanf(const char *format, ...) {
     int ret = ft_vfscanf(stdin, format, ap);
     va_end(ap);
     return ret;
+}
+
+int main(){
+	int n;
+	char c;
+	char str[100];
+
+	ft_scanf("%d  %c %s", &n, &c, str);
+
+	printf("n: %d\n", n);
+    printf("c: %c\n", c);
+    printf("str: %s\n", str);
 }
