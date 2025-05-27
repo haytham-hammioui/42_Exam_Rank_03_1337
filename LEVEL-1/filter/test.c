@@ -14,15 +14,15 @@ int ft_strncmp(const char *s1, const char *s2, int n){
 }
 
 int main(int ac, char **av){
-	if (ac != 2)
+	if(ac != 2)
 		return(printf("error in args"), 1);
 	char *word = av[1];
 	int s_word = strlen(word);
 	if(s_word == 0)
-		return(printf("failed empty word"), 1);
+		return(printf("empty word"), 1);
 	char *input = malloc(1);
 	if(!input)
-		return(perror("failed allocation input"), free(input), 1);
+		return(perror("failed allocation input"), 1);
 	int buffer_size = 1024;
 	char *buffer = malloc(buffer_size);
 	if(!buffer)
@@ -36,25 +36,26 @@ int main(int ac, char **av){
 		input = tmp;
 		int i = 0;
 		while(i < b_read){
-			input[size_total + i] = buffer[i]; 
+			input[size_total + i] = buffer[i];
 			i++;
 		}
 		size_total += b_read;
 		input[size_total] = '\0';
 	}
 	free(buffer);
-	char *p = input;
-	while(*p){
-		if(ft_strncmp(p, word, s_word) == 0){
+	char *ptr =input;
+	while(*ptr){
+		if((ft_strncmp(ptr, word, s_word)) == 0){
 			int i = 0;
 			while(i < s_word){
-				p[i] = '*';
+				ptr[i] = '*';
 				i++;
 			}
-			p+=s_word;
+			ptr += s_word;
 		}
-		else
-			p++;
+		else{
+			ptr++;
+		}
 	}
 	printf("%s", input);
 	free(input);

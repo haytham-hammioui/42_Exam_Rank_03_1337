@@ -16,24 +16,13 @@ int is_safe(int *positions, int current_col, int current_row){
 
 void solve(int *positions, int col, int n){
     if (col == n){
-        char buffer[12];
-        for (int i = 0; i < n; i++)
+       for (int i = 0; i < n; i++)
         {
             if (i > 0)
-                write(1, " ", 1);
-            int len = 0;
-            int num = positions[i];
-            if (num == 0)
-                buffer[len++] = '0';
-            while (num > 0)
-            {
-                buffer[len++] = (num % 10) + '0';
-                num /= 10;
-            }
-            while (len--)
-                write(1, &buffer[len], 1);
+                printf(" ");
+            printf("%d", positions[i]);
         }
-        write(1, "\n", 1);
+        printf("\n");
         return;
     }
     for(int row = 0; row < n; row++){
