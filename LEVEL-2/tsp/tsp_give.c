@@ -6,36 +6,17 @@
 #include <stdbool.h>
 #include <sys/types.h>
 
-ssize_t size;
-float (*array)[2];
-float best_distance = 9999999.9;
-bool *visited;
-float dist;
-
 // compute the distance between two points
 float    distance(float a[2], float b[2])
 {
     return sqrtf((b[0] - a[0]) * (b[0] - a[0]) + (b[1] - a[1]) * (b[1] - a[1]));
 }
 
-void   tsp(ssize_t current_city, float current_dist, float visited_count)
+float tsp(float (*array)[2], ssize_t size)
 {
-    if (visited_count == size)
-    {
-        current_dist += distance(array[current_city], array[0]);
-        if (current_dist < best_distance)
-            best_distance = current_dist;
-        return ;
-    }
-    for (ssize_t i=0; i<size; i++)
-    {
-        if (visited[i]) continue;
-        dist = distance(array[current_city], array[i]);
-        if (dist + current_dist >= best_distance) continue;
-        visited[i] = true;
-        tsp(i, dist+current_dist, visited_count+1);
-        visited[i] = false;
-    }
+    float best_distance;
+    // ...
+    return (best_distance);
 }
 
 ssize_t    file_size(FILE *file)
@@ -84,7 +65,7 @@ int        main(int ac, char **av)
         return 1;
     }
 
-    size = file_size(file);
+    ssize_t size = file_size(file);
     if (size == -1)
     {
         fprintf(stderr, "Error reading %s: %m\n", filename);
@@ -92,7 +73,7 @@ int        main(int ac, char **av)
         return 1;
     }
 
-    array = calloc(size, sizeof (float [2]));
+    float (*array)[2] = calloc(size, sizeof (float [2]));
     if (!array)
     {
         fprintf(stderr, "Error: %m\n");
@@ -109,9 +90,8 @@ int        main(int ac, char **av)
     }
     if (ac > 1)
         fclose(file);
-    visited = calloc(size, sizeof(bool));
-    tsp(0, 0, 0);
-    printf("%.2f\n", best_distance);
+
+    printf("%.2f\n", tsp(array, size));
     free(array);
     return (0);
 }

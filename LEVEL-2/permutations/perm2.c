@@ -1,6 +1,19 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+void sorted(char *str){
+	char tmp;
+	for(int i = 0; str[i]; i++){
+		for(int j = i+1; str[j]; j++){
+			if(str[i] > str[j]){
+				tmp = str[i];
+				str[i] = str[j];
+				str[j] = tmp;
+			}
+		}
+	}
+}
+
 void perm(char *str , char *result , int *used, int dep, int len)
 {
 	if (dep == len)
@@ -33,7 +46,7 @@ int main(int argc, char **argv) {
 	int len = i;
 	char *result = malloc(len + 1);
 	int *used = calloc(len, sizeof(int));
-
+	sorted(argv[1]);
 	perm(argv[1], result, used, 0, len);	
 	free(result);
 	free(used);

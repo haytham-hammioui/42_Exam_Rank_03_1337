@@ -5,8 +5,8 @@
 
 
 int ft_strncmp(const char *s1, const char *s2, int n){
-	int i=0;
-	while(s1[i] && s2[i] && i<n && s1[i] == s2[i])
+	int i =0;
+	while(i < n && s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
 	if(i == n)
 		return 0;
@@ -36,26 +36,25 @@ int main(int ac, char **av){
 		input = tmp;
 		int i = 0;
 		while(i < b_read){
-			input[size_total + i] = buffer[i];
+			input[size_total + i] = buffer[i]; 
 			i++;
 		}
 		size_total += b_read;
 		input[size_total] = '\0';
 	}
 	free(buffer);
-	char *ptr =input;
-	while(*ptr){
-		if((ft_strncmp(ptr, word, s_word)) == 0){
+	char *p = input;
+	while(*p){
+		if((ft_strncmp(p, word, s_word)) == 0){
 			int i = 0;
-			while(i < s_word){
-				ptr[i] = '*';
+			while(i<s_word){
+				p[i] = '*';
 				i++;
 			}
-			ptr += s_word;
+			p += s_word;
 		}
-		else{
-			ptr++;
-		}
+		else
+			p++;
 	}
 	printf("%s", input);
 	free(input);

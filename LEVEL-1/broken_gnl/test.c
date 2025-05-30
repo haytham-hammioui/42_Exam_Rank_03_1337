@@ -16,8 +16,7 @@ char *ft_strdup(char *line){
 	if(!ptr)
 		return NULL;
 	i = 0;
-	while(line[i])
-	{
+	while(line[i]){
 		ptr[i] = line[i];
 		i++;
 	}
@@ -27,13 +26,13 @@ char *ft_strdup(char *line){
 
 char    *get_next_line(int fd){
 	static char buffer[BUFFER_SIZE];
+	char line[70000];
 	static int b_read;
 	static int b_pos;
-	char line[70000];
 	int i = 0;
 	if(fd < 0 || BUFFER_SIZE < 1)
 		return NULL;
-	while(1){
+	while(1337){
 		if(b_pos >= b_read)
 		{
 			b_read = read(fd, buffer, BUFFER_SIZE);
@@ -46,9 +45,9 @@ char    *get_next_line(int fd){
 			break;
 	}
 	line[i] = '\0';
-	if(i == 0)
+	if(i ==0)
 		return NULL;
-	return ft_strdup(line);
+	return (ft_strdup(line));
 }
 
 int main(){
