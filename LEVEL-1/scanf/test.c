@@ -20,7 +20,7 @@ int match_char(FILE *f, char c)
         return -1;
     if(ch == c)
         return 1;
-    ungetc(c, f);
+    ungetc(ch, f);
     return (0);
 }
 
@@ -140,3 +140,4 @@ int ft_scanf(const char *format, ...)
 	va_end(ap);
 	return ret;
 }
+

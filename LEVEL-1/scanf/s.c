@@ -56,10 +56,10 @@ int ft_vfscanf(FILE *f, const char *format, va_list ap)
 {
 	int nconv = 0;
 
-	int c = fgetc(f);
-	if (c == EOF)
-		return EOF;
-	ungetc(c, f);
+	// int c = fgetc(f);
+	// if (c == EOF)
+	// 	return EOF;
+	// ungetc(c, f);
 
 	while (*format)
 	{
