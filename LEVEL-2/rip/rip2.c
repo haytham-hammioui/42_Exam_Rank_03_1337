@@ -32,7 +32,7 @@ void    rip(char *str, int must_fic, int n_fix, int pos)
         {
             int c = str[i];
             str[i] = ' ';
-            rip(str, must_fic, n_fix + 1, pos + 1);
+            rip(str, must_fic, n_fix + 1, i);
             str[i] = c;
         }
     }
